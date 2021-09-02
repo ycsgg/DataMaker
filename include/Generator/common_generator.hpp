@@ -50,7 +50,9 @@ Generator<T>::Generator(T a, T b)
 }
 template <typename T>
 T Generator<T>::next() {
-    assert(limit == true);
+    if(!limit){
+        throw "No limits for this generator!";
+    }
     if (usepool == false) {
         return nextRange(a, b);
     } else {

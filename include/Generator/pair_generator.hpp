@@ -45,7 +45,9 @@ PairGenerator<T, E>::PairGenerator(pair<T, E> a, pair<T, E> b, bool same)
 }
 template <typename T, typename E>
 pair<T, E> PairGenerator<T, E>::next() {
-    assert(limit == true);
+    if (!limit) {
+        throw "No limits for this generator!";
+    }
     return nextRange(a, b);
 }
 template <typename T, typename E>

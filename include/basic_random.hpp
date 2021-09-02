@@ -4,6 +4,7 @@
 #include <iostream>
 #include <limits>
 #include <random>
+#include <set>
 #include <vector>
 using std::vector;
 using i32 = int;
@@ -218,5 +219,59 @@ class Random {
     template <typename T, size_t L>
     T choose(std::array<T, L> Container) {
         return Container[nextRange(0, (int)L)];
+    }
+    template <typename T>
+    vector<T> distinct(T a, T b, int n) {
+        vector<T> res;
+        if (n == 0) {
+            return res;
+        }
+        int len = b - a + 1;
+        if (len < n) {
+            throw "Can't generate too much distinct numbers (b - a + 1 < n)";
+        }
+        res.reserve(n);
+        double expected = 0.0;
+        for (int i = 1; i <= n; i++)
+            expected += double(len) / double(len - i + 1);
+        if (expected < double(len)) {
+            std::set<int> vals;
+            while (vals.size() < n) {
+                auto v = nextRange(a, b);
+                auto result = vals.insert(v);
+                if (result.second) {
+                    res.push_back(v);
+                }
+            }
+        } else {
+            if (len > 1000000000) {
+                throw "Can't generate too much distinct numbers ";
+            }
+            vector<int> p(Random::getRandom().perm(len));
+            for (int i = 0; i < n; i++) {
+                res.push_back(p[i] + a - 1);
+            }
+        }
+        return res;
+    }
+    template <typename T>
+    vector<T> choose(std::vector<T> Container, int n) {
+        auto res = distinct(0, (int)Container.size() - 1, n);
+        vector<T> result;
+        result.reserve(n);
+        for (auto v : res) {
+            result.push_back(Container[v]);
+        }
+        return result;
+    }
+    template <typename T, size_t L>
+    vector<T> choose(std::array<T, L> Container, int n) {
+        auto res = distinct(0, (int)L - 1, n);
+        vector<T> result;
+        result.reserve(n);
+        for (auto v : res) {
+            result.push_back(Container[v]);
+        }
+        return result;
     }
 };
