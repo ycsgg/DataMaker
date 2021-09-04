@@ -14,10 +14,14 @@ int main() {
     // cout << v << " ";
     // }
     auto res = RandomGraph::randomConnectedUndirectedGraph(
-        10, 14, hasWeight = true, weightRange = make_pair(1, 2));
-    for (int i = 1; i <= 10; i++) {
-        for (auto e : res.edge[i]) {
-            cout << i << " " << e.v << endl;
-        }
-    }
+        10, 10, hasWeight = true, weightRange = make_pair(1, 2),
+        selfLoop = true);
+    // for (int i = 1; i <= 10; i++) {
+    //     for (auto e : res.edge[i]) {
+    //         cout << i << " " << e.v << endl;
+    //     }
+    // }
+    auto rres = Formatter::GraphFormatter::Format(res, output_type = RANDOM,
+                                                  no_weight = true);
+    cout << rres << endl;
 }

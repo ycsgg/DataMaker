@@ -37,6 +37,9 @@ Graph::Graph<int> randomConnectedUndirectedGraph(int n, int m, Args... args) {
         n, hasWeight = _judge, weightRange = _weightRange));
 
     m -= n - 1;
+    if (m + n - 1 > n * (n - 1) / 2 && (!_repeatedEdge || !_selfLoop)) {
+        throw "m is too large";
+    }
 
     PairGenerator<int, int> pgen(!_selfLoop);
     Generator<int> wgen;
@@ -53,9 +56,6 @@ Graph::Graph<int> randomConnectedUndirectedGraph(int n, int m, Args... args) {
             auto w = wgen.nextRange(_weightRange.first, _weightRange.second);
             graph.add(edge.first, edge.second, w);
         } else {
-            if (m + n - 1 > n * (n - 1) / 2) {
-                throw "m is too large";
-            }
             auto edge = pgen.nextRange({1, 1}, {n, n});
             while (_vis.count(edge)) {
                 edge = pgen.nextRange({1, 1}, {n, n});
