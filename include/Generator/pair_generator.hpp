@@ -7,17 +7,17 @@ class PairGenerator : public GeneratorImpl<pair<T, E>> {
     private:
     Generator<T> Tgen;
     Generator<E> Egen;
-    bool _same;
+    bool _not_same;
     bool limit;
     pair<T, E> a, b;
 
     public:
     PairGenerator();
     PairGenerator(pair<T, E> a, pair<T, E> b);
-    PairGenerator(bool _same);
+    PairGenerator(bool _not_same);
     PairGenerator(pair<T, E> a, pair<T, E> b, bool same);
     void SetSame(bool same) {
-        this->_same = same;
+        this->_not_same = same;
     }
     pair<T, E> next() override;
     pair<T, E> next(pair<T, E> n);
@@ -27,20 +27,20 @@ class PairGenerator : public GeneratorImpl<pair<T, E>> {
 };
 template <typename T, typename E>
 PairGenerator<T, E>::PairGenerator()
-    : Tgen(), Egen(), _same(false), limit(false) {
+    : Tgen(), Egen(), _not_same(false), limit(false) {
 }
 template <typename T, typename E>
 PairGenerator<T, E>::PairGenerator(pair<T, E> a, pair<T, E> b)
-    : Tgen(a.first, b.first), Egen(a.second, b.second), _same(false),
+    : Tgen(a.first, b.first), Egen(a.second, b.second), _not_same(false),
       limit(true), a(a), b(b) {
 }
 template <typename T, typename E>
-PairGenerator<T, E>::PairGenerator(bool _same)
-    : Tgen(), Egen(), _same(_same), limit(false) {
+PairGenerator<T, E>::PairGenerator(bool _not_same)
+    : Tgen(), Egen(), _not_same(_not_same), limit(false) {
 }
 template <typename T, typename E>
 PairGenerator<T, E>::PairGenerator(pair<T, E> a, pair<T, E> b, bool same)
-    : Tgen(a.first, b.first), Egen(a.second, b.second), a(a), b(b), _same(same),
+    : Tgen(a.first, b.first), Egen(a.second, b.second), a(a), b(b), _not_same(same),
       limit(true) {
 }
 template <typename T, typename E>
@@ -52,7 +52,7 @@ pair<T, E> PairGenerator<T, E>::next() {
 }
 template <typename T, typename E>
 pair<T, E> PairGenerator<T, E>::next(pair<T, E> n) {
-    if (_same) {
+    if (_not_same) {
         auto Tres = Tgen.next(n.first);
         auto Eres = Egen.next(n.second);
         while (Tres == Eres) {
@@ -66,7 +66,7 @@ pair<T, E> PairGenerator<T, E>::next(pair<T, E> n) {
 }
 template <typename T, typename E>
 pair<T, E> PairGenerator<T, E>::nextRange(pair<T, E> down, pair<T, E> up) {
-    if (_same) {
+    if (_not_same) {
         auto Tres = Tgen.nextRange(down.first, up.first);
         auto Eres = Egen.nextRange(down.second, up.second);
         while (Tres == Eres) {

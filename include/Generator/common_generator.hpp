@@ -66,7 +66,6 @@ T Generator<T>::next() {
 template <typename T>
 void Generator<T>::ReGen() {
     if (usepool) {
-        std::cerr << "Regen!" << '\n';
         _lim = _siz;
         pool = rnd.nextRange(a, b, _lim);
         _cur = 0;
