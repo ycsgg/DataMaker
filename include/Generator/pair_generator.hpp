@@ -2,6 +2,12 @@
 #include "basic_generator.hpp"
 #include "common_generator.hpp"
 using std::pair;
+/**
+ * @brief 生成一对 <T,E> 类型的随机数
+ * 
+ * @tparam T 类型参数1
+ * @tparam E 类型参数2
+ */
 template <typename T, typename E>
 class PairGenerator : public GeneratorImpl<pair<T, E>> {
     private:
@@ -25,24 +31,48 @@ class PairGenerator : public GeneratorImpl<pair<T, E>> {
     vector<pair<T, E>> next(pair<T, E> n, int m);
     vector<pair<T, E>> nextRange(pair<T, E> down, pair<T, E> up, int m);
 };
+/**
+ * @brief 创建一个新的 PairGenerator 对象
+ */
 template <typename T, typename E>
 PairGenerator<T, E>::PairGenerator()
     : Tgen(), Egen(), _not_same(false), limit(false) {
 }
+/**
+ * @brief 创建一个新的 PairGenerator 对象并指定上下界
+ *
+ * @param a 分别为 <T,E> 的下界
+ * @param b 分别为 <T,E> 的上界
+ */
 template <typename T, typename E>
 PairGenerator<T, E>::PairGenerator(pair<T, E> a, pair<T, E> b)
     : Tgen(a.first, b.first), Egen(a.second, b.second), _not_same(false),
       limit(true), a(a), b(b) {
 }
+/**
+ * @brief 创建一个新的 PairGenerator 对象
+ * 
+ * @param _not_same 生成的一对数能否相同
+ */
 template <typename T, typename E>
 PairGenerator<T, E>::PairGenerator(bool _not_same)
     : Tgen(), Egen(), _not_same(_not_same), limit(false) {
 }
+/**
+ * @brief 创建一个新的 PairGenerator 对象并指定上下界
+ *
+ * @param a 分别为 <T,E> 的下界
+ * @param b 分别为 <T,E> 的上界
+ * @param same 生成的一对数能否相同
+ */
 template <typename T, typename E>
-PairGenerator<T, E>::PairGenerator(pair<T, E> a, pair<T, E> b, bool same)
-    : Tgen(a.first, b.first), Egen(a.second, b.second), a(a), b(b), _not_same(same),
+PairGenerator<T, E>::PairGenerator(pair<T, E> a, pair<T, E> b, bool _not_same)
+    : Tgen(a.first, b.first), Egen(a.second, b.second), a(a), b(b), _not_same(_not_same),
       limit(true) {
 }
+/**
+ * @brief 统一接口，需要指定上下界
+ */
 template <typename T, typename E>
 pair<T, E> PairGenerator<T, E>::next() {
     if (!limit) {

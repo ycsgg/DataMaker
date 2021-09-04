@@ -11,8 +11,21 @@ registerNamedType(repeatedEdge, bool);
 namespace RandomGraph {
 using namespace GraphArgs;
 /**
- * n 个节点 m 条边的无向连通带权图
- * 默认无重边自环
+ * @file random_graph.hpp
+ * @fn Graph::Graph<int> randomConnectedUndirectedGraph(int n, int m, Args... args)
+ * @param n 图的节点个数
+ * @param m 图的边数
+ * @param args 放置具名参数
+ * @return 一个带边权的图
+ * @brief 生成 n 个点,m 条边的无向连通图
+ * 可指定 \n
+ * selfLoop : \n
+ * True -> 允许自环 \n
+ * False -> 不允许自环 (默认) \n
+ * repeatedEdge : \n
+ * True -> 允许重边 \n
+ * False -> 不允许自环 (默认) \n
+ * @author YCS_GG(ycs_gg@outlook.com)
  * */
 template <typename... Args>
 Graph::Graph<int> randomConnectedUndirectedGraph(int n, int m, Args... args) {

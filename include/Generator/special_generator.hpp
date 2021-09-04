@@ -4,7 +4,11 @@
 #include "common_generator.hpp"
 #include <algorithm>
 
-// only for Integer
+/**
+ * @brief 用来生成满足特殊性质的数
+ * 
+ * @tparam T 仅接受整型
+ */
 template <typename T>
 class SpecialGenerator {
     private:
@@ -14,8 +18,12 @@ class SpecialGenerator {
     SpecialGenerator() : gen() {
     }
     /**
-     * 将整数 n 划分为 m 个非负整数之和
-     * */
+     * @brief 将整数 n 随机划分为 m 个非负整数之和
+     * 
+     * @param n 需要被划分的数
+     * @param m 划分的段数
+     * @return 划分的 m 个非负整数
+     */
     vector<T> SumPartition(T n, int m) {
         if (m <= 0) {
             throw "m must be postive";
@@ -35,8 +43,12 @@ class SpecialGenerator {
         return result;
     }
     /**
-     * 将整数 n 划分为 m 个正整数之和
-     * */
+     * @brief 将整数 n 随机划分为 m 个正整数之和
+     *
+     * @param n 需要被划分的数
+     * @param m 划分的段数
+     * @return 划分的 m 个正整数
+     */
     vector<T> SumPartitionPostive(T n, int m) {
         if (m <= 0) {
             throw "m must be postive";

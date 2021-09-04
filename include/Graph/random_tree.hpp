@@ -11,6 +11,11 @@ static const weightRangeType::Argument weightRange;
 
 namespace RandomTree {
 using namespace GraphArgs;
+/**
+ * @file random_tree.hpp
+ * @brief 并查集
+ * @author YCS_GG(ycs_gg@outlook.com)
+ */
 struct _dsu {
     std::vector<int> fa;
     _dsu(int n) : fa(n + 1) {
@@ -31,11 +36,24 @@ struct _dsu {
 };
 
 /**
- * 生成一个大小为 n 的无根带权树
- * 原理是随机一条边检查是否在一个连通块里，若不连通则加上
- * 可以证明每棵树被生成是等概率的 期望高度是 sqrt{2 * Pi * n}
- * 期望连边次数是 (n ln n) / 2
- * 期望复杂度 O(n ln n)
+ * @file random_tree.hpp
+ * @fn UnrootedTree randomTree(int n, Args... args)
+ * @param n 树的节点数量
+ * @param args 放置具名参数
+ * @return 一个 n 个节点的带权树，按照图的方式储存
+ * @brief 生成大小为 n 的无根带权树
+ * 可指定 \n
+ * hasWeight : \n
+ * True -> 有边权 \n
+ * False -> 无边权 (默认) \n
+ * weightRange : \n
+ * pair<int,int> -> 边权的上下界 (默认(0,0)) \n
+ * 生成一个大小为 n 的无根带权树 \n
+ * 原理是随机一条边检查是否在一个连通块里，若不连通则加上 \n
+ * 可以证明每棵树被生成是等概率的 期望高度是 sqrt{2 * Pi * n} \n
+ * 期望连边次数是 (n ln n) / 2 \n
+ * 期望复杂度 O(n ln n) \n
+ * @author YCS_GG(ycs_gg@outlook.com)
  * */
 using UnrootedTree = Graph::Graph<int>;
 template <typename... Args>
@@ -67,11 +85,24 @@ UnrootedTree randomTree(int n, Args... args) {
     return tr;
 }
 /**
- * 生成一个大小为 n 的有根带权树，根为 1
- * 原理是随机每个点 i 的父亲为 [1,i) 中的一个数
- * 期望高度为 log n
- * 复杂度 O(n)
+ * @file random_tree.hpp
+ * @fn Graph::Tree<int> randomTreeLog(int n, Args... args)
+ * @param n 树的节点数量
+ * @param args 放置具名参数
+ * @return 一个 n 个节点的带权树，按照父子关系存储
+ * @brief 生成大小为 n 的有根带权树，根为 1 
+ * 可指定 \n
+ * hasWeight : \n
+ * True -> 有边权 \n
+ * False -> 无边权 (默认) \n
+ * weightRange : \n
+ * pair<int,int> -> 边权的上下界 (默认(0,0)) \n
+ * 原理是随机每个点 i 的父亲为 [1,i) 中的一个数 \n
+ * 期望高度为 O(log n) \n
+ * 复杂度 O(n) \n
+ * @author YCS_GG(ycs_gg@outlook.com)
  * */
+
 template <typename... Args>
 Graph::Tree<int> randomTreeLog(int n, Args... args) {
     pair<int, int> _weightRange = std::make_pair(0, 0);

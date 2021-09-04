@@ -27,6 +27,22 @@ namespace GraphFormatter {
 
 using namespace FormatterArgs;
 
+/**
+ * @file graph_format.hpp
+ * @fn std::string Format(const Graph::Graph<T> G, Args... args)
+ * @brief 将图转换为可输出的字符串
+ * 格式为 n 行，每行为 "u v w" \n
+ * 可指定 \n
+ * output_type : \n
+ * RANDOM -> 随机输出 \n
+ * ORDER -> 按 1 ~ n 的顺序输出 (默认) \n
+ * no_weight : \n
+ * True -> 不输出边权 \n
+ * False -> 输出边权 (默认) \n
+ * @param G 图
+ * @param args 放置具名参数
+ * @return std::string 返回的字符串
+ */
 template <typename T, typename... Args>
 std::string Format(const Graph::Graph<T> G, Args... args) {
     OutputType _output_type = ORDER;
