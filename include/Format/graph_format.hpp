@@ -21,7 +21,6 @@ registerNamedType(output_type, OutputType);
 
 registerNamedType(no_weight, bool);
 
-
 } // namespace FormatterArgs
 
 namespace GraphFormatter {
@@ -74,6 +73,8 @@ std::string Format(const Graph::Graph<T> G, Args... args) {
             result.append(edge);
         }
     }
+    auto it = result.end();
+    result.erase(--it);
     return result;
 }
 } // namespace GraphFormatter

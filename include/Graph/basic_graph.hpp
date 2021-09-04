@@ -26,14 +26,6 @@ struct Tree {
         fa[i].fa = _fa;
         fa[i].w = w;
     }
-    Tree(const Tree &tr) : fa(tr.fa.size()) {
-        int n = tr.fa.size() - 1;
-        for (int i = 1; i <= n; i++) {
-            if (tr.fa[i] != 0) {
-                add(tr.fa[i], i, T());
-            }
-        }
-    }
 };
 /**
  * 默认从 1 标号
@@ -50,8 +42,8 @@ struct Graph {
     Graph(const Tree<T> &tr) : edge(tr.fa.size()) {
         int n = tr.fa.size() - 1;
         for (int i = 1; i <= n; i++) {
-            if (tr.fa[i].v != 0)
-                edge[i].push_back(tr.fa[i]);
+            if (tr.fa[i].fa != 0)
+                edge[i].push_back({tr.fa[i].fa, tr.fa[i].w});
         }
     }
     void add(int u, int v, T w = T()) {

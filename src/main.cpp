@@ -13,15 +13,16 @@ int main() {
     // for (auto v : res) {
     // cout << v << " ";
     // }
-    auto res = RandomGraph::randomConnectedUndirectedGraph(
-        10, 10, hasWeight = true, weightRange = make_pair(1, 2),
-        selfLoop = true);
+    // auto res = RandomGraph::randomConnectedUndirectedGraph(
+    //     10, 10, hasWeight = true, weightRange = make_pair(1, 2),
+    //     selfLoop = true);
+    auto res = RandomTree::randomTreeLog(10);
     // for (int i = 1; i <= 10; i++) {
     //     for (auto e : res.edge[i]) {
     //         cout << i << " " << e.v << endl;
     //     }
     // }
-    auto rres = Formatter::GraphFormatter::Format(res, output_type = RANDOM,
+    auto rres = Formatter::GraphFormatter::Format(Graph::Graph<int>(res), output_type = RANDOM,
                                                   no_weight = true);
     cout << rres << endl;
 }

@@ -58,7 +58,8 @@ UnrootedTree randomTree(int n, Args... args) {
         int y = gen.next();
         tot += 2;
         if (dsu.find(x) != dsu.find(y)) {
-            tr.add(x, y, gen.nextRange(_weightRange.first, _weightRange.second));
+            tr.add(x, y,
+                   gen.nextRange(_weightRange.first, _weightRange.second));
             dsu.merge(x, y);
             cnt--;
         }
@@ -84,7 +85,7 @@ Graph::Tree<int> randomTreeLog(int n, Args... args) {
     Graph::Tree tr(n);
     auto gen = Generator<int>();
     for (int i = 2; i <= n; i++) {
-        tr.add(gen.nextRange(1, i), i,
+        tr.add(gen.nextRange(1, i - 1), i,
                gen.nextRange(_weightRange.first, _weightRange.second));
     }
     return tr;
