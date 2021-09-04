@@ -46,7 +46,6 @@ UnrootedTree randomTree(int n) {
             cnt--;
         }
     }
-    std::cout << tot << '\n';
     return tr;
 }
 /**

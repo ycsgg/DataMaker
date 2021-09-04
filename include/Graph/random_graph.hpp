@@ -1,3 +1,4 @@
+#pragma once
 #include "basic_graph.hpp"
 #include "random_tree.hpp"
 #include <assert.h>

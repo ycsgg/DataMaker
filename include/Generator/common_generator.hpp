@@ -7,7 +7,7 @@
 registerNamedType(lim, int);
 registerNamedType(siz, int);
 
-template <typename T>   
+template <typename T>
 class Generator : public GeneratorImpl<T> {
     private:
     Random &rnd;
@@ -33,6 +33,7 @@ class Generator : public GeneratorImpl<T> {
     std::vector<T> nextRange(T a, T b, int m);
     std::vector<T> wnext(T n, int type, int m);
     std::vector<T> wnextRange(T a, T b, int type, int m);
+    std::vector<T> distinct(T a, T b, int n);
 };
 template <typename T>
 Generator<T>::Generator()
@@ -50,7 +51,7 @@ Generator<T>::Generator(T a, T b)
 }
 template <typename T>
 T Generator<T>::next() {
-    if(!limit){
+    if (!limit) {
         throw "No limits for this generator!";
     }
     if (usepool == false) {
@@ -103,4 +104,8 @@ std::vector<T> Generator<T>::wnext(T n, int type, int m) {
 template <typename T>
 std::vector<T> Generator<T>::wnextRange(T a, T b, int type, int m) {
     return rnd.wnextRange(a, b, type, m);
+}
+template <typename T>
+std::vector<T> Generator<T>::distinct(T a, T b, int n) {
+    return rnd.distinct(a, b, n);
 }
