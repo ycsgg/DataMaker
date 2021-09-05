@@ -55,7 +55,7 @@ struct _dsu {
  * 期望复杂度 O(n ln n) \n
  * @author YCS_GG(ycs_gg@outlook.com)
  * */
-using UnrootedTree = Graph::Graph<int>;
+using UnrootedTree = graph::Graph<int>;
 template <typename... Args>
 UnrootedTree randomTree(int n, Args... args) {
     using namespace generator;
@@ -87,7 +87,7 @@ UnrootedTree randomTree(int n, Args... args) {
 }
 /**
  * @file random_tree.hpp
- * @fn Graph::Tree<int> randomTreeLog(int n, Args... args)
+ * @fn graph::Tree<int> randomTreeLog(int n, Args... args)
  * @param n 树的节点数量
  * @param args 放置具名参数
  * @return 一个 n 个节点的带权树，按照父子关系存储
@@ -105,7 +105,7 @@ UnrootedTree randomTree(int n, Args... args) {
  * */
 
 template <typename... Args>
-Graph::Tree<int> randomTreeLog(int n, Args... args) {
+graph::Tree<int> randomTreeLog(int n, Args... args) {
     using namespace generator;
     pair<int, int> _weightRange = std::make_pair(0, 0);
     { // init
@@ -115,7 +115,7 @@ Graph::Tree<int> randomTreeLog(int n, Args... args) {
             _weightRange = getval<weightRangeType>(_args_tuple, {0, 0});
         }
     }
-    Graph::Tree tr(n);
+    graph::Tree tr(n);
     auto gen = Generator<int>();
     for (int i = 2; i <= n; i++) {
         tr.add(gen.nextRange(1, i - 1), i,

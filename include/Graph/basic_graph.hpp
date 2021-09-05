@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 using std::vector;
-namespace Graph {
+namespace graph {
 template <typename T>
 struct Graph;
 template <typename T>
@@ -77,5 +77,7 @@ struct Graph {
     void add(int u, int v, T w = T()) {
         edge[u].emplace_back(Node{v, w});
     }
+    Graph<T> operator+(const Graph<T> &G);
+    Graph<T> operator|(const Graph<T> &G);
 };
-} // namespace Graph
+} // namespace graph

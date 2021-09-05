@@ -12,7 +12,7 @@ namespace RandomGraph {
 using namespace GraphArgs;
 /**
  * @file random_graph.hpp
- * @fn Graph::Graph<int> randomConnectedUndirectedGraph(int n, int m, Args... args)
+ * @fn graph::Graph<int> randomConnectedUndirectedGraph(int n, int m, Args... args)
  * @param n 图的节点个数
  * @param m 图的边数
  * @param args 放置具名参数
@@ -33,7 +33,7 @@ using namespace GraphArgs;
  * @author YCS_GG(ycs_gg@outlook.com)
  * */
 template <typename... Args>
-Graph::Graph<int> randomConnectedUndirectedGraph(int n, int m, Args... args) {
+graph::Graph<int> randomConnectedUndirectedGraph(int n, int m, Args... args) {
     using namespace generator;
     if (m < n - 1) {
         throw "m is too small";
@@ -52,7 +52,7 @@ Graph::Graph<int> randomConnectedUndirectedGraph(int n, int m, Args... args) {
         _repeatedEdge = getval<repeatedEdgeType>(_args_tuple, false);
     }
 
-    auto graph = Graph::Graph(RandomTree::randomTree(
+    auto graph = graph::Graph(RandomTree::randomTree(
         n, hasWeight = _judge, weightRange = _weightRange));
 
     m -= n - 1;
@@ -89,7 +89,7 @@ Graph::Graph<int> randomConnectedUndirectedGraph(int n, int m, Args... args) {
 }
 /**
  * @file random_graph.hpp
- * @fn Graph::Graph<int> randomConnectedDirectedGraph(int n, int m, Args... args)
+ * @fn graph::Graph<int> randomConnectedDirectedGraph(int n, int m, Args... args)
  * @param n 图的节点个数
  * @param m 图的边数
  * @param args 放置具名参数
@@ -110,7 +110,7 @@ Graph::Graph<int> randomConnectedUndirectedGraph(int n, int m, Args... args) {
  * @author YCS_GG(ycs_gg@outlook.com)
  * */
 template <typename... Args>
-Graph::Graph<int> randomConnectedDirectedGraph(int n, int m, Args... args) {
+graph::Graph<int> randomConnectedDirectedGraph(int n, int m, Args... args) {
     using namespace generator;
     if (m < n - 1) {
         throw "m is too small";
@@ -129,7 +129,7 @@ Graph::Graph<int> randomConnectedDirectedGraph(int n, int m, Args... args) {
         _repeatedEdge = getval<repeatedEdgeType>(_args_tuple, false);
     }
 
-    auto graph = Graph::Graph(RandomTree::randomTree(
+    auto graph = graph::Graph(RandomTree::randomTree(
         n, hasWeight = _judge, weightRange = _weightRange));
 
     m -= n - 1;
@@ -165,7 +165,7 @@ Graph::Graph<int> randomConnectedDirectedGraph(int n, int m, Args... args) {
 }
 /**
  * @file random_graph.hpp
- * @fn Graph::Graph<int> randomDAG(int n, int m, Args... args)
+ * @fn graph::Graph<int> randomDAG(int n, int m, Args... args)
  * @param n 图的节点个数
  * @param m 图的边数
  * @param args 放置具名参数
@@ -180,12 +180,12 @@ Graph::Graph<int> randomConnectedDirectedGraph(int n, int m, Args... args) {
  * @author YCS_GG(ycs_gg@outlook.com)
  * */
 template <typename... Args>
-Graph::Graph<int> randomDAG(int n, int m, Args... args) {
+graph::Graph<int> randomDAG(int n, int m, Args... args) {
     using namespace generator;
     if (m > n * (n - 1) / 2) {
         throw "m is too large";
     }
-    Graph::Graph graph(n);
+    graph::Graph graph(n);
     pair<int, int> _weightRange = std::make_pair(0, 0);
     { // init
         auto _args_tuple = std::make_tuple(std::forward<Args>(args)...);

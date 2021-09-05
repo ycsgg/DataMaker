@@ -9,7 +9,7 @@ int main() {
         auto res = RandomGraph::randomDAG(10000, 10001, hasWeight = false,
                                           weightRange = make_pair(1, 100));
         out << Formatter::GraphFormatter::Format(
-            Graph::Graph<int>(res),
+            graph::Graph<int>(res),
             output_type = RANDOM,
             no_weight = true
         );

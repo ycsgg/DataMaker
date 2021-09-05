@@ -29,7 +29,7 @@ using namespace FormatterArgs;
 
 /**
  * @file graph_format.hpp
- * @fn std::string Format(const Graph::Graph<T> G, Args... args)
+ * @fn std::string Format(const graph::Graph<T> G, Args... args)
  * @brief 将图转换为可输出的字符串
  * 格式为 n 行，每行为 "u v w" \n
  * 可指定 \n
@@ -44,7 +44,7 @@ using namespace FormatterArgs;
  * @return std::string 返回的字符串
  */
 template <typename T, typename... Args>
-std::string Format(const Graph::Graph<T> G, Args... args) {
+std::string Format(const graph::Graph<T> G, Args... args) {
     OutputType _output_type = ORDER;
     bool _no_weight = false;
     { // init
