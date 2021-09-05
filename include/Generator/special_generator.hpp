@@ -4,6 +4,7 @@
 #include "common_generator.hpp"
 #include <algorithm>
 
+namespace generator {
 /**
  * @brief 用来生成满足特殊性质的数
  * 
@@ -71,3 +72,4 @@ class SpecialGenerator {
         return result;
     }
 };
+} // namespace generator

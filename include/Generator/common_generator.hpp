@@ -3,7 +3,8 @@
 #include "../basic_random.hpp"
 #include "basic_generator.hpp"
 #include <assert.h>
-
+namespace generator {
+using namespace random;
 /**
  * @brief 基本生成器，可以生成 T 类型的随机数
  * 
@@ -150,3 +151,4 @@ template <typename T>
 std::vector<T> Generator<T>::distinct(T a, T b, int n) {
     return rnd.distinct(a, b, n);
 }
+} // namespace generator

@@ -1,5 +1,6 @@
 #pragma once
-#include "../basic_random.hpp"
+
+namespace generator {
 /**
  * @brief 统一接口
  * 
@@ -15,3 +16,4 @@ class GeneratorImpl {
         return T();
     };
 };
+} // namespace generator

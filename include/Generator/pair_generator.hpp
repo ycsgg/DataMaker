@@ -1,6 +1,8 @@
 #pragma once
 #include "basic_generator.hpp"
 #include "common_generator.hpp"
+
+namespace generator {
 using std::pair;
 /**
  * @brief 生成一对 <T,E> 类型的随机数
@@ -67,8 +69,8 @@ PairGenerator<T, E>::PairGenerator(bool _not_same)
  */
 template <typename T, typename E>
 PairGenerator<T, E>::PairGenerator(pair<T, E> a, pair<T, E> b, bool _not_same)
-    : Tgen(a.first, b.first), Egen(a.second, b.second), a(a), b(b), _not_same(_not_same),
-      limit(true) {
+    : Tgen(a.first, b.first), Egen(a.second, b.second), a(a), b(b),
+      _not_same(_not_same), limit(true) {
 }
 /**
  * @brief 统一接口，需要指定上下界
@@ -126,3 +128,4 @@ vector<pair<T, E>> PairGenerator<T, E>::nextRange(pair<T, E> down,
     }
     return res;
 }
+} // namespace generator
