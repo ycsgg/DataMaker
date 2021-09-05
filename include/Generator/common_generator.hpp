@@ -4,7 +4,7 @@
 #include "basic_generator.hpp"
 #include <assert.h>
 namespace generator {
-using namespace random;
+using namespace random_d;
 /**
  * @brief 基本生成器，可以生成 T 类型的随机数
  * 
@@ -44,7 +44,7 @@ class Generator : public GeneratorImpl<T> {
  */
 template <typename T>
 Generator<T>::Generator()
-    : rnd(Random::getRandom()), usepool(false), limit(false) {
+    : rnd(random_d::Random::getRandom()), usepool(false), limit(false) {
 }
 /**
  * @brief Generator 对象
@@ -56,8 +56,8 @@ Generator<T>::Generator()
  */
 template <typename T>
 Generator<T>::Generator(T a, T b, int lim, int siz)
-    : rnd(Random::getRandom()), usepool(true), a(a), b(b), _lim(lim), _cur(0),
-      _siz(siz), limit(true) {
+    : rnd(random_d::Random::getRandom()), usepool(true), a(a), b(b), _lim(lim),
+      _cur(0), _siz(siz), limit(true) {
     pool = rnd.nextRange(a, b, lim);
 }
 /**
@@ -68,7 +68,8 @@ Generator<T>::Generator(T a, T b, int lim, int siz)
  */
 template <typename T>
 Generator<T>::Generator(T a, T b)
-    : usepool(false), rnd(Random::getRandom()), limit(true), a(a), b(b) {
+    : usepool(false), rnd(random_d::Random::getRandom()), limit(true), a(a),
+      b(b) {
 }
 /**
  * @brief 统一接口，生成 [a,b] 中的随机数 (需在构造函数指定a,b)

@@ -6,7 +6,7 @@
 #include <random>
 #include <set>
 #include <vector>
-namespace random {
+namespace random_d {
 using std::vector;
 using i32 = int;
 using u32 = unsigned int;

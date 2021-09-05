@@ -62,7 +62,7 @@ class SpecialGenerator {
             result[0] = n;
             return result;
         }
-        auto &&res = Random::getRandom().distinct(1, n - 1, m - 1);
+        auto &&res = random_d::Random::getRandom().distinct(1, n - 1, m - 1);
         std::sort(res.begin(), res.end());
         result[0] = res[0];
         for (int i = 1; i < res.size(); i++) {

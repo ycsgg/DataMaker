@@ -33,7 +33,8 @@ class Output {
             fp_io.close();
         }
     }
-    Output &operator<<(const std::string &s) {
+    template <typename T>
+    Output &operator<<(const T &s) {
         if (fp_io.is_open()) {
             fp_io << s;
         } else {
@@ -44,4 +45,4 @@ class Output {
         return *this;
     }
 };
-} // namespace fileio
+} // namespace FileIO

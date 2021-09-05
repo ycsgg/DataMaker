@@ -5,7 +5,7 @@
 
 namespace GraphArgs {
 registerNamedType(hasWeight, bool);
-using weightRangeType = NamedType<pair<int, int>, struct __weightRangeTypeTag>;
+using weightRangeType = NamedType<std::pair<int, int>, struct __weightRangeTypeTag>;
 static const weightRangeType::Argument weightRange;
 } // namespace GraphArgs
 
@@ -58,6 +58,7 @@ struct _dsu {
 using UnrootedTree = Graph::Graph<int>;
 template <typename... Args>
 UnrootedTree randomTree(int n, Args... args) {
+    using namespace generator;
     pair<int, int> _weightRange = std::make_pair(0, 0);
     { // init
         auto _args_tuple = std::make_tuple(std::forward<Args>(args)...);
@@ -105,6 +106,7 @@ UnrootedTree randomTree(int n, Args... args) {
 
 template <typename... Args>
 Graph::Tree<int> randomTreeLog(int n, Args... args) {
+    using namespace generator;
     pair<int, int> _weightRange = std::make_pair(0, 0);
     { // init
         auto _args_tuple = std::make_tuple(std::forward<Args>(args)...);
