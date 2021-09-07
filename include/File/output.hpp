@@ -1,4 +1,5 @@
 #pragma once
+#include "./data.hpp"
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -32,6 +33,13 @@ class Output {
         if (fp_io.is_open()) {
             fp_io.close();
         }
+    }
+    Data finish() {
+        cur++;
+        if (fp_io.is_open()) {
+            fp_io.close();
+        }
+        return Data(data_prefix + std::to_string(cur - 1), data_suffix);
     }
     template <typename T>
     Output &operator<<(const T &s) {

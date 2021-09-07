@@ -1,12 +1,8 @@
 #pragma once
 #include "basic_graph.hpp"
 #include "random_tree.hpp"
+#include "./graph_args.hpp"
 #include <map>
-
-namespace GraphArgs {
-registerNamedType(selfLoop, bool);
-registerNamedType(repeatedEdge, bool);
-} // namespace GraphArgs
 
 namespace RandomGraph {
 using namespace GraphArgs;

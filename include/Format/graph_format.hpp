@@ -1,7 +1,7 @@
 #pragma once
-#include "../Base/named_type.hpp"
 #include "../Generator/common_generator.hpp"
 #include "../Graph/basic_graph.hpp"
+#include "./format_args.hpp"
 #include <algorithm>
 #include <iostream>
 #include <sstream>
@@ -11,17 +11,6 @@
 #include <vector>
 
 namespace Formatter {
-
-namespace FormatterArgs {
-enum OutputType {
-    RANDOM,
-    ORDER,
-};
-registerNamedType(output_type, OutputType);
-
-registerNamedType(no_weight, bool);
-
-} // namespace FormatterArgs
 
 namespace GraphFormatter {
 

@@ -1,13 +1,8 @@
 #pragma once
 #include "../Base/named_type.hpp"
 #include "../Generator/generator.hpp"
+#include "./graph_args.hpp"
 #include "basic_graph.hpp"
-
-namespace GraphArgs {
-registerNamedType(hasWeight, bool);
-using weightRangeType = NamedType<std::pair<int, int>, struct __weightRangeTypeTag>;
-static const weightRangeType::Argument weightRange;
-} // namespace GraphArgs
 
 namespace RandomTree {
 using namespace GraphArgs;
