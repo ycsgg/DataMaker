@@ -1,7 +1,7 @@
 #pragma once
+#include "./graph_args.hpp"
 #include "basic_graph.hpp"
 #include "random_tree.hpp"
-#include "./graph_args.hpp"
 #include <map>
 
 namespace RandomGraph {
@@ -52,7 +52,7 @@ graph::Graph<int> randomConnectedUndirectedGraph(int n, int m, Args... args) {
         n, hasWeight = _judge, weightRange = _weightRange));
 
     m -= n - 1;
-    if (m + n - 1 > n * (n - 1) / 2 && (!_repeatedEdge || !_selfLoop)) {
+    if (m + n - 1 > 1ll * n * (n - 1) / 2 && (!_repeatedEdge || !_selfLoop)) {
         throw "m is too large";
     }
 
@@ -129,7 +129,7 @@ graph::Graph<int> randomConnectedDirectedGraph(int n, int m, Args... args) {
         n, hasWeight = _judge, weightRange = _weightRange));
 
     m -= n - 1;
-    if (m + n - 1 > n * (n - 1) / 2 && (!_repeatedEdge || !_selfLoop)) {
+    if (m + n - 1 > 1ll * n * (n - 1) / 2 && (!_repeatedEdge || !_selfLoop)) {
         throw "m is too large";
     }
 
@@ -178,7 +178,7 @@ graph::Graph<int> randomConnectedDirectedGraph(int n, int m, Args... args) {
 template <typename... Args>
 graph::Graph<int> randomDAG(int n, int m, Args... args) {
     using namespace generator;
-    if (m > n * (n - 1) / 2) {
+    if (m > 1ll * n * (n - 1) / 2) {
         throw "m is too large";
     }
     graph::Graph graph(n);

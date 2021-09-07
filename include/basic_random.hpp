@@ -379,4 +379,4 @@ class Random {
         return result;
     }
 };
-} // namespace random
+} // namespace random_d
