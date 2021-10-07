@@ -4,15 +4,14 @@
 #include "./format_args.hpp"
 #include <algorithm>
 #include <iostream>
+#include <random>
 #include <sstream>
 #include <string>
 #include <tuple>
 #include <unordered_map>
 #include <vector>
 
-namespace Formatter {
-
-namespace GraphFormatter {
+namespace Formatter::GraphFormatter {
 
 using namespace FormatterArgs;
 
@@ -48,11 +47,11 @@ std::string Format(const graph::Graph<T> G, Args... args) {
         for (int i = 1; i <= n; i++) {
             for (auto e : G.edge[i]) {
                 int v = e.v;
-                edgelist.push_back(std::make_pair(i, v));
+                edgelist.emplace_back(i, v);
             }
         }
         if (_output_type == RANDOM) {
-            std::random_shuffle(edgelist.begin(), edgelist.end());
+            std::shuffle(edgelist.begin(), edgelist.end(), std::mt19937(std::random_device()()));
         }
         for (auto p : edgelist) {
             auto edge =
@@ -82,6 +81,4 @@ std::string Format(const graph::Graph<T> G, Args... args) {
     result.erase(--it);
     return result;
 }
-} // namespace GraphFormatter
-
 } // namespace Formatter

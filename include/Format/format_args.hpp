@@ -1,7 +1,6 @@
 #pragma once
 #include "../Base/named_type.hpp"
-namespace Formatter{
-namespace FormatterArgs {
+namespace Formatter::FormatterArgs {
 enum OutputType {
     RANDOM,
     ORDER,
@@ -12,5 +11,4 @@ registerNamedType(no_weight, bool);
 
 registerNamedType(delimeter, char);
 
-} // namespace FormatterArgs
-}
+} // namespace Formatter

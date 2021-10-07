@@ -3,3 +3,4 @@
 #include "common_generator.hpp"
 #include "pair_generator.hpp"
 #include "special_generator.hpp"
+#include "string_generator.hpp"

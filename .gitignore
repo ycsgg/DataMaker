@@ -3,3 +3,4 @@
 *.in
 /src
 /doc
+/cmake-build-debug

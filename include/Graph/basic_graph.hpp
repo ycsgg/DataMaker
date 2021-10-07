@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "../Base/string_exception.hpp"
 using std::vector;
 namespace graph {
 template <typename T>
@@ -22,7 +23,7 @@ struct Tree {
      * 
      * @param n 树的大小
      */
-    Tree(int n) : fa(n + 1) {
+    explicit Tree(int n) : fa(n + 1) {
     }
     /**
      * @brief 加入一条新边
@@ -53,14 +54,14 @@ struct Graph {
      * 
      * @param n 图的大小
      */
-    Graph(int n) : edge(n + 1) {
+    explicit Graph(int n) : edge(n + 1) {
     }
     /**
      * @brief 从树转化成图
      * 
      * @param tr 树
      */
-    Graph(const Tree<T> &tr) : edge(tr.fa.size()) {
+    explicit Graph(const Tree<T> &tr) : edge(tr.fa.size()) {
         int n = tr.fa.size() - 1;
         for (int i = 1; i <= n; i++) {
             if (tr.fa[i].fa != 0)

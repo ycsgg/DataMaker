@@ -1,3 +1,5 @@
+#include <utility>
+
 #include "../Base/executor.hpp"
 #include "./exec.hpp"
 
@@ -12,8 +14,8 @@ class Source {
         : path(path), name(name) {
     }
 #else
-    explicit Source(const std::string &name, const std::string &path = "./")
-        : path(path), name(name) {
+    explicit Source(std::string name, std::string path = "./")
+        : path(std::move(path)), name(std::move(name)) {
     }
 #endif
     Exec compile(const std::string &output = "std.out",

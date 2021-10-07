@@ -32,11 +32,11 @@ template <typename... Args>
 graph::Graph<int> randomConnectedUndirectedGraph(int n, int m, Args... args) {
     using namespace generator;
     if (m < n - 1) {
-        throw "m is too small";
+        throw StringException("m is too small");
     }
     pair<int, int> _weightRange = std::make_pair(0, 0);
-    bool _selfLoop = false;
-    bool _repeatedEdge = false;
+    bool _selfLoop;
+    bool _repeatedEdge;
     bool _judge;
     { // init
         auto _args_tuple = std::make_tuple(std::forward<Args>(args)...);
@@ -53,31 +53,31 @@ graph::Graph<int> randomConnectedUndirectedGraph(int n, int m, Args... args) {
 
     m -= n - 1;
     if (m + n - 1 > 1ll * n * (n - 1) / 2 && (!_repeatedEdge || !_selfLoop)) {
-        throw "m is too large";
+        throw StringException("m is too large");
     }
 
     PairGenerator<int, int> pgen(!_selfLoop);
-    Generator<int> wgen;
+    Generator<int> w_gen;
     std::map<pair<int, int>, bool> _vis;
     for (int i = 1; i <= n; i++) {
         for (auto e : graph.edge[i]) {
             int v = e.v;
-            _vis[std::make_pair(i, v)] = _vis[std::make_pair(v, i)] = 1;
+            _vis[std::make_pair(i, v)] = _vis[std::make_pair(v, i)] = true;
         }
     }
     while (m--) {
         if (_repeatedEdge) {
             auto edge = pgen.nextRange({1, 1}, {n, n});
-            auto w = wgen.nextRange(_weightRange.first, _weightRange.second);
+            auto w = w_gen.nextRange(_weightRange.first, _weightRange.second);
             graph.add(edge.first, edge.second, w);
         } else {
             auto edge = pgen.nextRange({1, 1}, {n, n});
             while (_vis.count(edge)) {
                 edge = pgen.nextRange({1, 1}, {n, n});
             }
-            _vis[edge] = 1;
-            _vis[{edge.second, edge.first}] = 1;
-            auto w = wgen.nextRange(_weightRange.first, _weightRange.second);
+            _vis[edge] = true;
+            _vis[{edge.second, edge.first}] = true;
+            auto w = w_gen.nextRange(_weightRange.first, _weightRange.second);
             graph.add(edge.first, edge.second, w);
         }
     }
@@ -109,11 +109,11 @@ template <typename... Args>
 graph::Graph<int> randomConnectedDirectedGraph(int n, int m, Args... args) {
     using namespace generator;
     if (m < n - 1) {
-        throw "m is too small";
+        throw StringException("m is too small");
     }
     pair<int, int> _weightRange = std::make_pair(0, 0);
-    bool _selfLoop = false;
-    bool _repeatedEdge = false;
+    bool _selfLoop;
+    bool _repeatedEdge;
     bool _judge;
     { // init
         auto _args_tuple = std::make_tuple(std::forward<Args>(args)...);
@@ -130,30 +130,30 @@ graph::Graph<int> randomConnectedDirectedGraph(int n, int m, Args... args) {
 
     m -= n - 1;
     if (m + n - 1 > 1ll * n * (n - 1) / 2 && (!_repeatedEdge || !_selfLoop)) {
-        throw "m is too large";
+        throw StringException("m is too large");
     }
 
     PairGenerator<int, int> pgen(!_selfLoop);
-    Generator<int> wgen;
+    Generator<int> w_gen;
     std::map<pair<int, int>, bool> _vis;
     for (int i = 1; i <= n; i++) {
         for (auto e : graph.edge[i]) {
             int v = e.v;
-            _vis[std::make_pair(i, v)] = 1;
+            _vis[std::make_pair(i, v)] = true;
         }
     }
     while (m--) {
         if (_repeatedEdge) {
             auto edge = pgen.nextRange({1, 1}, {n, n});
-            auto w = wgen.nextRange(_weightRange.first, _weightRange.second);
+            auto w = w_gen.nextRange(_weightRange.first, _weightRange.second);
             graph.add(edge.first, edge.second, w);
         } else {
             auto edge = pgen.nextRange({1, 1}, {n, n});
             while (_vis.count(edge)) {
                 edge = pgen.nextRange({1, 1}, {n, n});
             }
-            _vis[edge] = 1;
-            auto w = wgen.nextRange(_weightRange.first, _weightRange.second);
+            _vis[edge] = true;
+            auto w = w_gen.nextRange(_weightRange.first, _weightRange.second);
             graph.add(edge.first, edge.second, w);
         }
     }
@@ -179,7 +179,7 @@ template <typename... Args>
 graph::Graph<int> randomDAG(int n, int m, Args... args) {
     using namespace generator;
     if (m > 1ll * n * (n - 1) / 2) {
-        throw "m is too large";
+        throw StringException("m is too large");
     }
     graph::Graph graph(n);
     pair<int, int> _weightRange = std::make_pair(0, 0);
@@ -192,7 +192,7 @@ graph::Graph<int> randomDAG(int n, int m, Args... args) {
     }
     auto &&p = random_d::Random::getRandom().perm(n);
     Generator<int> gen;
-    Generator<int> wgen;
+    Generator<int> w_gen;
     std::map<pair<int, int>, bool> _vis;
     for (int i = 1; i <= m; i++) {
         int x = gen.nextRange(1, n - 1);
@@ -201,8 +201,8 @@ graph::Graph<int> randomDAG(int n, int m, Args... args) {
             x = gen.nextRange(1, n - 1);
             y = gen.nextRange(x + 1, n);
         }
-        _vis[std::make_pair(x, y)] = 1;
-        auto w = wgen.nextRange(_weightRange.first, _weightRange.second);
+        _vis[std::make_pair(x, y)] = true;
+        auto w = w_gen.nextRange(_weightRange.first, _weightRange.second);
         graph.add(p[x - 1], p[y - 1], w);
     }
     return graph;
@@ -234,12 +234,12 @@ graph::Graph<int> randomNormalGraph(int n, int m, Args... args) {
     using namespace generator;
     using namespace generator;
     if (m < n - 1) {
-        throw "m is too small";
+        throw StringException("m is too small");
     }
 
     pair<int, int> _weightRange = std::make_pair(0, 0);
-    bool _selfLoop = false;
-    bool _repeatedEdge = false;
+    bool _selfLoop;
+    bool _repeatedEdge;
     bool _judge;
     { // init
         auto _args_tuple = std::make_tuple(std::forward<Args>(args)...);
@@ -251,25 +251,25 @@ graph::Graph<int> randomNormalGraph(int n, int m, Args... args) {
         _repeatedEdge = getval<repeatedEdgeType>(_args_tuple, false);
     }
     if (m > 1ll * n * (n - 1) / 2 && (!_repeatedEdge || !_selfLoop)) {
-        throw "m is too large";
+        throw StringException("m is too large");
     }
-    graph::Graph graph;
+    graph::Graph graph(n);
     PairGenerator<int, int> pgen(!_selfLoop);
-    Generator<int> wgen;
+    Generator<int> w_gen;
     std::map<pair<int, int>, bool> _vis;
     while (m--) {
         if (_repeatedEdge) {
             auto edge = pgen.nextRange({1, 1}, {n, n});
-            auto w = wgen.nextRange(_weightRange.first, _weightRange.second);
+            auto w = w_gen.nextRange(_weightRange.first, _weightRange.second);
             graph.add(edge.first, edge.second, w);
         } else {
             auto edge = pgen.nextRange({1, 1}, {n, n});
             while (_vis.count(edge)) {
                 edge = pgen.nextRange({1, 1}, {n, n});
             }
-            _vis[edge] = 1;
-            _vis[{edge.second, edge.first}] = 1;
-            auto w = wgen.nextRange(_weightRange.first, _weightRange.second);
+            _vis[edge] = true;
+            _vis[{edge.second, edge.first}] = true;
+            auto w = w_gen.nextRange(_weightRange.first, _weightRange.second);
             graph.add(edge.first, edge.second, w);
         }
     }
@@ -301,12 +301,12 @@ template <typename... Args>
 graph::Graph<int> randomNormalDirectedGraph(int n, int m, Args... args) {
     using namespace generator;
     if (m < n - 1) {
-        throw "m is too small";
+        throw StringException("m is too small");
     }
 
     pair<int, int> _weightRange = std::make_pair(0, 0);
-    bool _selfLoop = false;
-    bool _repeatedEdge = false;
+    bool _selfLoop;
+    bool _repeatedEdge;
     bool _judge;
     { // init
         auto _args_tuple = std::make_tuple(std::forward<Args>(args)...);
@@ -318,25 +318,25 @@ graph::Graph<int> randomNormalDirectedGraph(int n, int m, Args... args) {
         _repeatedEdge = getval<repeatedEdgeType>(_args_tuple, false);
     }
     if (m > 1ll * n * (n - 1) / 2 && (!_repeatedEdge || !_selfLoop)) {
-        throw "m is too large";
+        throw StringException("m is too large");
     }
-    graph::Graph graph;
+    graph::Graph graph(n);
 
     PairGenerator<int, int> pgen(!_selfLoop);
-    Generator<int> wgen;
+    Generator<int> w_gen;
     std::map<pair<int, int>, bool> _vis;
     while (m--) {
         if (_repeatedEdge) {
             auto edge = pgen.nextRange({1, 1}, {n, n});
-            auto w = wgen.nextRange(_weightRange.first, _weightRange.second);
+            auto w = w_gen.nextRange(_weightRange.first, _weightRange.second);
             graph.add(edge.first, edge.second, w);
         } else {
             auto edge = pgen.nextRange({1, 1}, {n, n});
             while (_vis.count(edge)) {
                 edge = pgen.nextRange({1, 1}, {n, n});
             }
-            _vis[edge] = 1;
-            auto w = wgen.nextRange(_weightRange.first, _weightRange.second);
+            _vis[edge] = true;
+            auto w = w_gen.nextRange(_weightRange.first, _weightRange.second);
             graph.add(edge.first, edge.second, w);
         }
     }

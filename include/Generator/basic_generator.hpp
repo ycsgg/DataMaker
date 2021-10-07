@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../Base/string_exception.hpp"
+
 namespace generator {
 /**
  * @brief 统一接口
@@ -10,8 +12,7 @@ template <typename T>
 class GeneratorImpl {
     private:
     public:
-    GeneratorImpl() {
-    }
+    GeneratorImpl() = default;
     virtual T next() {
         return T();
     };

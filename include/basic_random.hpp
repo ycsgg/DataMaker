@@ -322,10 +322,10 @@ class Random {
         for (int i = 1; i <= n; i++)
             expected += double(len) / double(len - i + 1);
         if (expected < double(len)) {
-            std::set<int> vals;
-            while (vals.size() < n) {
+            std::set<int> values;
+            while (values.size() < n) {
                 auto v = nextRange(a, b);
-                auto result = vals.insert(v);
+                auto result = values.insert(v);
                 if (result.second) {
                     res.push_back(v);
                 }

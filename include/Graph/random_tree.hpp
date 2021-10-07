@@ -13,7 +13,7 @@ using namespace GraphArgs;
  */
 struct _dsu {
     std::vector<int> fa;
-    _dsu(int n) : fa(n + 1) {
+    explicit _dsu(int n) : fa(n + 1) {
         for (int i = 1; i <= n; i++) {
             fa[i] = i;
         }

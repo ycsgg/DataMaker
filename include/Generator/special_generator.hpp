@@ -27,7 +27,7 @@ class SpecialGenerator {
      */
     vector<T> SumPartition(T n, int m) {
         if (m <= 0) {
-            throw "m must be postive";
+            throw StringException("m must be positive");
         }
         vector<T> result(m);
         if (m == 1) {
@@ -50,12 +50,12 @@ class SpecialGenerator {
      * @param m 划分的段数
      * @return 划分的 m 个正整数
      */
-    vector<T> SumPartitionPostive(T n, int m) {
+    vector<T> SumPartitionPositive(T n, int m) {
         if (m <= 0) {
-            throw "m must be postive";
+            throw StringException("m must be positive");
         }
         if (m > n) {
-            throw "m must be less than n";
+            throw StringException("m must be less than n");
         }
         vector<T> result(m);
         if (m == 1) {

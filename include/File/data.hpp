@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <utility>
 class Data {
     private:
     std::string path;
@@ -17,25 +18,25 @@ class Data {
         name = s.substr(0, s.find('.'));
     }
 #else
-    explicit Data(const std::string &name, const std::string &suffix,
-                  const std::string &path = "./")
-        : name(name), suffix(suffix), path(path) {
+    explicit Data(std::string name, std::string suffix,
+                  std::string path = "./")
+        : name(std::move(name)), suffix(std::move(suffix)), path(std::move(path)) {
     }
-    Data(const std::string &s) : path("./") {
+    explicit Data(const std::string &s) : path("./") {
         suffix = s.substr(s.find('.'));
         name = s.substr(0, s.find('.'));
     }
 #endif
-    std::string getFile() const {
+    [[nodiscard]] std::string getFile() const {
         return path + name + suffix;
     }
-    std::string getName() const {
+    [[nodiscard]] std::string getName() const {
         return name;
     }
-    std::string getPath() const {
+    [[nodiscard]] std::string getPath() const {
         return path;
     }
-    std::string getSuffix() const {
+    [[nodiscard]] std::string getSuffix() const {
         return suffix;
     }
 };

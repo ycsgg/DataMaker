@@ -13,8 +13,8 @@ using std::pair;
 template <typename T, typename E>
 class PairGenerator : public GeneratorImpl<pair<T, E>> {
     private:
-    Generator<T> Tgen;
-    Generator<E> Egen;
+    Generator<T> T_gen;
+    Generator<E> E_gen;
     bool _not_same;
     bool limit;
     pair<T, E> a, b;
@@ -22,7 +22,7 @@ class PairGenerator : public GeneratorImpl<pair<T, E>> {
     public:
     PairGenerator();
     PairGenerator(pair<T, E> a, pair<T, E> b);
-    PairGenerator(bool _not_same);
+    explicit PairGenerator(bool _not_same);
     PairGenerator(pair<T, E> a, pair<T, E> b, bool same);
     void SetSame(bool same) {
         this->_not_same = same;
@@ -38,7 +38,7 @@ class PairGenerator : public GeneratorImpl<pair<T, E>> {
  */
 template <typename T, typename E>
 PairGenerator<T, E>::PairGenerator()
-    : Tgen(), Egen(), _not_same(false), limit(false) {
+    : T_gen(), E_gen(), _not_same(false), limit(false) {
 }
 /**
  * @brief 创建一个新的 PairGenerator 对象并指定上下界
@@ -48,7 +48,7 @@ PairGenerator<T, E>::PairGenerator()
  */
 template <typename T, typename E>
 PairGenerator<T, E>::PairGenerator(pair<T, E> a, pair<T, E> b)
-    : Tgen(a.first, b.first), Egen(a.second, b.second), _not_same(false),
+    : T_gen(a.first, b.first), E_gen(a.second, b.second), _not_same(false),
       limit(true), a(a), b(b) {
 }
 /**
@@ -58,7 +58,7 @@ PairGenerator<T, E>::PairGenerator(pair<T, E> a, pair<T, E> b)
  */
 template <typename T, typename E>
 PairGenerator<T, E>::PairGenerator(bool _not_same)
-    : Tgen(), Egen(), _not_same(_not_same), limit(false) {
+    : T_gen(), E_gen(), _not_same(_not_same), limit(false) {
 }
 /**
  * @brief 创建一个新的 PairGenerator 对象并指定上下界
@@ -69,7 +69,7 @@ PairGenerator<T, E>::PairGenerator(bool _not_same)
  */
 template <typename T, typename E>
 PairGenerator<T, E>::PairGenerator(pair<T, E> a, pair<T, E> b, bool _not_same)
-    : Tgen(a.first, b.first), Egen(a.second, b.second), a(a), b(b),
+    : T_gen(a.first, b.first), E_gen(a.second, b.second), a(a), b(b),
       _not_same(_not_same), limit(true) {
 }
 /**
@@ -78,37 +78,37 @@ PairGenerator<T, E>::PairGenerator(pair<T, E> a, pair<T, E> b, bool _not_same)
 template <typename T, typename E>
 pair<T, E> PairGenerator<T, E>::next() {
     if (!limit) {
-        throw "No limits for this generator!";
+        throw StringException("No limits for this generator!");
     }
     return nextRange(a, b);
 }
 template <typename T, typename E>
 pair<T, E> PairGenerator<T, E>::next(pair<T, E> n) {
     if (_not_same) {
-        auto Tres = Tgen.next(n.first);
-        auto Eres = Egen.next(n.second);
-        while (Tres == Eres) {
-            Tres = Tgen.next(n.first);
-            Eres = Egen.next(n.second);
+        auto T_res = T_gen.next(n.first);
+        auto E_res = E_gen.next(n.second);
+        while (T_res == E_res) {
+            T_res = T_gen.next(n.first);
+            E_res = E_gen.next(n.second);
         }
-        return std::make_pair(Tres, Eres);
+        return std::make_pair(T_res, E_res);
     } else {
-        return std::make_pair(Tgen.next(n.first), Egen.next(n.second));
+        return std::make_pair(T_gen.next(n.first), E_gen.next(n.second));
     }
 }
 template <typename T, typename E>
 pair<T, E> PairGenerator<T, E>::nextRange(pair<T, E> down, pair<T, E> up) {
     if (_not_same) {
-        auto Tres = Tgen.nextRange(down.first, up.first);
-        auto Eres = Egen.nextRange(down.second, up.second);
-        while (Tres == Eres) {
-            Tres = Tgen.nextRange(down.first, up.first);
-            Eres = Egen.nextRange(down.second, up.second);
+        auto T_res = T_gen.nextRange(down.first, up.first);
+        auto E_res = E_gen.nextRange(down.second, up.second);
+        while (T_res == E_res) {
+            T_res = T_gen.nextRange(down.first, up.first);
+            E_res = E_gen.nextRange(down.second, up.second);
         }
-        return std::make_pair(Tres, Eres);
+        return std::make_pair(T_res, E_res);
     } else {
-        return std::make_pair(Tgen.nextRange(down.first, up.first),
-                              Egen.nextRange(down.second, up.second));
+        return std::make_pair(T_gen.nextRange(down.first, up.first),
+                              E_gen.nextRange(down.second, up.second));
     }
 }
 template <typename T, typename E>

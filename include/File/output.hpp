@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <utility>
 
 namespace FileIO {
 class Output {
@@ -13,14 +14,14 @@ class Output {
     int cur;
 
     public:
-    explicit Output(const std::string &data_prefix)
-        : data_prefix(data_prefix), data_suffix(".in") {
+    explicit Output(std::string data_prefix)
+        : data_prefix(std::move(data_prefix)), data_suffix(".in") {
         cur = 0;
     }
 
-    explicit Output(const std::string &data_prefix,
-                    const std::string &data_suffix)
-        : data_prefix(data_prefix), data_suffix(data_suffix) {
+    explicit Output(std::string data_prefix,
+                    std::string data_suffix)
+        : data_prefix(std::move(data_prefix)), data_suffix(std::move(data_suffix)) {
         cur = 0;
     }
     ~Output() {

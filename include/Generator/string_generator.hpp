@@ -22,7 +22,7 @@ static std::vector<char> NUMBER({'0', '1', '2', '3', '4', '5', '6', '7', '8',
 
 namespace generator {
 using namespace DefaultAlphabet;
-class StringGenerator : GeneratorImpl<char> {
+class StringGenerator : public GeneratorImpl<char> {
     private:
     Random &rnd;
     std::vector<char> &Alphabet;
@@ -30,7 +30,7 @@ class StringGenerator : GeneratorImpl<char> {
     public:
     StringGenerator() : rnd(Random::getRandom()), Alphabet(LOWERCASE) {
     }
-    StringGenerator(vector<char> &alphabet)
+    explicit StringGenerator(vector<char> &alphabet)
         : rnd(Random::getRandom()), Alphabet(alphabet) {
     }
     char next() override;

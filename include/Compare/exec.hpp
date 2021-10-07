@@ -1,4 +1,6 @@
 #pragma once
+#include <utility>
+
 #include "../Base/executor.hpp"
 #include "../File/data.hpp"
 class Exec {
@@ -12,8 +14,8 @@ class Exec {
         : path(path), name(name) {
     }
 #else
-    explicit Exec(const std::string &name, const std::string &path = "./")
-        : path(path), name(name) {
+    explicit Exec(std::string name, std::string path = "./")
+        : path(std::move(path)), name(std::move(name)) {
     }
 #endif
     void run(const Data &input, const Data &output) {
