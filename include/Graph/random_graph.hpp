@@ -207,4 +207,139 @@ graph::Graph<int> randomDAG(int n, int m, Args... args) {
     }
     return graph;
 }
+/**
+ * @file random_graph.hpp
+ * @fn graph::Graph<int> randomNormalGraph(int n, int m, Args... args)
+ * @param n 图的节点个数
+ * @param m 图的边数
+ * @param args 放置具名参数
+ * @return 一个带边权的图
+ * @brief 生成 n 个点,m 条边的无向图
+ * 可指定 \n
+ * selfLoop : \n
+ * True -> 允许自环 \n
+ * False -> 不允许自环 (默认) \n
+ * repeatedEdge : \n
+ * True -> 允许重边 \n
+ * False -> 不允许自环 (默认) \n
+ * hasWeight :
+ * True -> 有权
+ * False -> 无权 (默认)
+ * weightRange : 
+ * pair<int,int> -> 边权上下界，仅 hasWeight 为 True 时生效
+ * @author YCS_GG(ycs_gg@outlook.com)
+ * */
+template <typename... Args>
+graph::Graph<int> randomNormalGraph(int n, int m, Args... args) {
+    using namespace generator;
+    using namespace generator;
+    if (m < n - 1) {
+        throw "m is too small";
+    }
+
+    pair<int, int> _weightRange = std::make_pair(0, 0);
+    bool _selfLoop = false;
+    bool _repeatedEdge = false;
+    bool _judge;
+    { // init
+        auto _args_tuple = std::make_tuple(std::forward<Args>(args)...);
+        _judge = getval<hasWeightType>(_args_tuple, false);
+        if (_judge) {
+            _weightRange = getval<weightRangeType>(_args_tuple, {0, 0});
+        }
+        _selfLoop = getval<selfLoopType>(_args_tuple, false);
+        _repeatedEdge = getval<repeatedEdgeType>(_args_tuple, false);
+    }
+    if (m > 1ll * n * (n - 1) / 2 && (!_repeatedEdge || !_selfLoop)) {
+        throw "m is too large";
+    }
+    graph::Graph graph;
+    PairGenerator<int, int> pgen(!_selfLoop);
+    Generator<int> wgen;
+    std::map<pair<int, int>, bool> _vis;
+    while (m--) {
+        if (_repeatedEdge) {
+            auto edge = pgen.nextRange({1, 1}, {n, n});
+            auto w = wgen.nextRange(_weightRange.first, _weightRange.second);
+            graph.add(edge.first, edge.second, w);
+        } else {
+            auto edge = pgen.nextRange({1, 1}, {n, n});
+            while (_vis.count(edge)) {
+                edge = pgen.nextRange({1, 1}, {n, n});
+            }
+            _vis[edge] = 1;
+            _vis[{edge.second, edge.first}] = 1;
+            auto w = wgen.nextRange(_weightRange.first, _weightRange.second);
+            graph.add(edge.first, edge.second, w);
+        }
+    }
+    return graph;
+}
+/**
+ * @file random_graph.hpp
+ * @fn graph::Graph<int> randomNormalDirectedGraph(int n, int m, Args... args)
+ * @param n 图的节点个数
+ * @param m 图的边数
+ * @param args 放置具名参数
+ * @return 一个带边权的图
+ * @brief 生成 n 个点,m 条边的有向图
+ * 可指定 \n
+ * selfLoop : \n
+ * True -> 允许自环 \n
+ * False -> 不允许自环 (默认) \n
+ * repeatedEdge : \n
+ * True -> 允许重边 \n
+ * False -> 不允许自环 (默认) \n
+ * hasWeight :
+ * True -> 有权
+ * False -> 无权 (默认)
+ * weightRange : 
+ * pair<int,int> -> 边权上下界，仅 hasWeight 为 True 时生效
+ * @author YCS_GG(ycs_gg@outlook.com)
+ * */
+template <typename... Args>
+graph::Graph<int> randomNormalDirectedGraph(int n, int m, Args... args) {
+    using namespace generator;
+    if (m < n - 1) {
+        throw "m is too small";
+    }
+
+    pair<int, int> _weightRange = std::make_pair(0, 0);
+    bool _selfLoop = false;
+    bool _repeatedEdge = false;
+    bool _judge;
+    { // init
+        auto _args_tuple = std::make_tuple(std::forward<Args>(args)...);
+        _judge = getval<hasWeightType>(_args_tuple, false);
+        if (_judge) {
+            _weightRange = getval<weightRangeType>(_args_tuple, {0, 0});
+        }
+        _selfLoop = getval<selfLoopType>(_args_tuple, false);
+        _repeatedEdge = getval<repeatedEdgeType>(_args_tuple, false);
+    }
+    if (m > 1ll * n * (n - 1) / 2 && (!_repeatedEdge || !_selfLoop)) {
+        throw "m is too large";
+    }
+    graph::Graph graph;
+
+    PairGenerator<int, int> pgen(!_selfLoop);
+    Generator<int> wgen;
+    std::map<pair<int, int>, bool> _vis;
+    while (m--) {
+        if (_repeatedEdge) {
+            auto edge = pgen.nextRange({1, 1}, {n, n});
+            auto w = wgen.nextRange(_weightRange.first, _weightRange.second);
+            graph.add(edge.first, edge.second, w);
+        } else {
+            auto edge = pgen.nextRange({1, 1}, {n, n});
+            while (_vis.count(edge)) {
+                edge = pgen.nextRange({1, 1}, {n, n});
+            }
+            _vis[edge] = 1;
+            auto w = wgen.nextRange(_weightRange.first, _weightRange.second);
+            graph.add(edge.first, edge.second, w);
+        }
+    }
+    return graph;
+}
 } // namespace RandomGraph
