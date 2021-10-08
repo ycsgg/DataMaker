@@ -1,6 +1,6 @@
 #pragma once
-#include <vector>
 #include "../Base/string_exception.hpp"
+#include <ostream>
 using std::vector;
 namespace graph {
 template <typename T>

@@ -1,3 +1,5 @@
+#pragma once
+#include "../Format/graph_format.hpp"
 #include "./basic_graph.hpp"
 
 namespace graph {
@@ -45,6 +47,22 @@ Graph<T> mix(const Graph<T> &A, const Graph<T> &B) {
     }
     return result;
 }
+/**
+ * @file graph_utils.hpp
+ * @fn Graph<T> toBidirected(const Graph<T> &G)
+ * @brief 将无向图转为双向图
+ */
+template <typename T>
+Graph<T> toBidirected(const Graph<T> &G) {
+    Graph<T> res(G);
+    int n = G.edge.size() - 1;
+    for (int x = 1; x <= n; x++) {
+        for (auto e : G.edge[x]) {
+            res.add(e.v, x, e.w);
+        }
+    }
+    return res;
+}
 template <typename T>
 Graph<T> Graph<T>::operator+(const Graph &G) {
     return connect(*this, G);
@@ -52,5 +70,15 @@ Graph<T> Graph<T>::operator+(const Graph &G) {
 template <typename T>
 Graph<T> Graph<T>::operator|(const Graph &G) {
     return mix(*this, G);
+}
+template <typename T>
+std::ostream &operator<<(std::ostream &os, const Graph<T> &graph1) {
+    os << Formatter::GraphFormatter::Format(graph1);
+    return os;
+}
+template <typename T>
+std::ostream &operator<<(std::ostream &os, const Tree<T> &tree) {
+    os << Graph(tree);
+    return os;
 }
 } // namespace graph

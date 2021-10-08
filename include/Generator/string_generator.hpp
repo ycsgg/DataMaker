@@ -25,13 +25,16 @@ using namespace DefaultAlphabet;
 class StringGenerator : public GeneratorImpl<char> {
     private:
     Random &rnd;
-    std::vector<char> &Alphabet;
+    std::vector<char> Alphabet;
 
     public:
     StringGenerator() : rnd(Random::getRandom()), Alphabet(LOWERCASE) {
     }
     explicit StringGenerator(vector<char> &alphabet)
         : rnd(Random::getRandom()), Alphabet(alphabet) {
+    }
+    explicit StringGenerator(std::string &alphabet)
+        : rnd(Random::getRandom()), Alphabet(alphabet.begin(), alphabet.end()) {
     }
     char next() override;
     vector<char> next(int n);

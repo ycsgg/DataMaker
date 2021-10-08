@@ -97,7 +97,7 @@ graph::Graph<int> randomConnectedUndirectedGraph(int n, int m, Args... args) {
  * False -> 不允许自环 (默认) \n
  * repeatedEdge : \n
  * True -> 允许重边 \n
- * False -> 不允许自环 (默认) \n
+ * False -> 不允许重边 (默认) \n
  * hasWeight :
  * True -> 有权
  * False -> 无权 (默认)
@@ -221,7 +221,7 @@ graph::Graph<int> randomDAG(int n, int m, Args... args) {
  * False -> 不允许自环 (默认) \n
  * repeatedEdge : \n
  * True -> 允许重边 \n
- * False -> 不允许自环 (默认) \n
+ * False -> 不允许重边 (默认) \n
  * hasWeight :
  * True -> 有权
  * False -> 无权 (默认)
@@ -232,10 +232,6 @@ graph::Graph<int> randomDAG(int n, int m, Args... args) {
 template <typename... Args>
 graph::Graph<int> randomNormalGraph(int n, int m, Args... args) {
     using namespace generator;
-    using namespace generator;
-    if (m < n - 1) {
-        throw StringException("m is too small");
-    }
 
     pair<int, int> _weightRange = std::make_pair(0, 0);
     bool _selfLoop;
@@ -300,9 +296,6 @@ graph::Graph<int> randomNormalGraph(int n, int m, Args... args) {
 template <typename... Args>
 graph::Graph<int> randomNormalDirectedGraph(int n, int m, Args... args) {
     using namespace generator;
-    if (m < n - 1) {
-        throw StringException("m is too small");
-    }
 
     pair<int, int> _weightRange = std::make_pair(0, 0);
     bool _selfLoop;
