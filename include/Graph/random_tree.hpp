@@ -44,10 +44,8 @@ struct _dsu {
  * weightRange : \n
  * pair<int,int> -> 边权的上下界 (默认(0,0)) \n
  * 生成一个大小为 n 的无根带权树 \n
- * 原理是随机一条边检查是否在一个连通块里，若不连通则加上 \n
- * 可以证明每棵树被生成是等概率的 期望高度是 sqrt{2 * Pi * n} \n
- * 期望连边次数是 (n ln n) / 2 \n
- * 期望复杂度 O(n ln n) \n
+ * 原理是随机一个 prufer 序列还原成树，保证均匀
+ * 复杂度 O(n)
  * @author YCS_GG(ycs_gg@outlook.com)
  * */
 using UnrootedTree = graph::Graph<int>;
@@ -62,22 +60,19 @@ UnrootedTree randomTree(int n, Args... args) {
             _weightRange = getval<weightRangeType>(_args_tuple, {0, 0});
         }
     }
-    UnrootedTree tr(n);
-    _dsu dsu(n);
+
     auto gen = Generator<int>(1, n);
-    int cnt = n;
-    int tot = 0;
-    while (cnt != 1) {
-        int x = gen.next();
-        int y = gen.next();
-        tot += 2;
-        if (dsu.find(x) != dsu.find(y)) {
-            tr.add(x, y,
-                   gen.nextRange(_weightRange.first, _weightRange.second));
-            dsu.merge(x, y);
-            cnt--;
+
+    auto prufer = gen.nextRange(1, n, n - 2);
+
+    UnrootedTree tr(graph::PrufertoTree(prufer));
+
+    for (auto el : tr.edge) {
+        for (auto e : el) {
+            e.w = gen.nextRange(_weightRange.first, _weightRange.second);
         }
     }
+
     return tr;
 }
 /**

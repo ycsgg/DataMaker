@@ -81,4 +81,52 @@ std::ostream &operator<<(std::ostream &os, const Tree<T> &tree) {
     os << Graph(tree);
     return os;
 }
+
+template <typename T>
+std::vector<int> TreetoPrufer(const Tree<T> &Tr) {
+    int n = Tr.fa.size() - 1;
+
+    std::vector<int> deg(n);
+    std::vector<int> res(n - 1);
+
+    for (int i = 1; i < n; i++) {
+        deg[Tr.fa[i].fa]++;
+    }
+    for (int i = 0, j = 1; i < n - 2; i++, j++) {
+        while (deg[j]) {
+            ++j;
+        }
+        res[i] = Tr.fa[j].fa;
+        while (i <= n - 2 && !--deg[res[i]] && res[i] < j) {
+            res[i + 1] = Tr.fa[res[i]].fa;
+            i++;
+        }
+    }
+    res.pop_back();
+    return res;
+}
+
+Tree<int> PrufertoTree(const std::vector<int> &_prufer) {
+    auto prufer = _prufer;
+    int n = prufer.size() + 2;
+
+    std::vector<int> deg(n);
+    Tree<int> res(n);
+
+    for (int i = 0; i < n - 2; i++) {
+        ++deg[prufer[i]];
+    }
+    prufer.push_back(n);
+    for (int i = 0, j = 1; i < n - 1; i++, j++) {
+        while (deg[j]) {
+            ++j;
+        }
+        res.add(prufer[i], j);
+        while (i < n && !--deg[prufer[i]] && prufer[i] < j) {
+            res.add(prufer[i + 1], prufer[i]);
+            i++;
+        }
+    }
+    return res;
+}
 } // namespace graph

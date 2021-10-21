@@ -33,21 +33,10 @@ int main() {
     //                                                );
     //        exec.run(out.finish());
     //    }
-    int n = 600;
-    int m = 500;
-    auto G = RandomGraph::randomNormalGraph(n, m);
-    auto bG = graph::toBidirected(G);
-    int cnt = 0;
-    vector<int> siz;
-    for (int i = 1; i <= n; i++) {
-        if (!vis[i]) {
-            tot = 0;
-            cnt++;
-            dfs(i, bG);
-            siz.push_back(tot);
-            cout << "---------------\n";
-        }
-    }
-    cout << Formatter::SeqFormatter::Format(siz) << '\n';
-    cout << cnt << '\n';
+    auto Tr = RandomTree::randomTree(10000000);
+    // cout << Tr;
+    // cout << Formatter::GraphFormatter::Format(graph::Graph(Tr)) << '\n';
+    // graph::Tree<int> R = graph::PrufertoTree(graph::TreetoPrufer(Tr));
+    // cout << Formatter::GraphFormatter::Format(graph::Graph(R)) << '\n';
+    // cout << Formatter::SeqFormatter::Format(graph::toPrufer(Tr));
 }
